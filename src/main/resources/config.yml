@@ -1,0 +1,20 @@
+# Configuration File
+
+# Setup MySQL database
+
+mysql:
+  host: 'localhost'
+  port: 3306
+  database: 'flarum'
+  username: 'root'
+  password: ''
+
+flarum:
+  table-prefix: 'flarum_'
+
+messages:
+  registration-success: '&aYou registered successfully at the forum!'
+  registration-error: '&cError, you cannot register.'
+  registration-error-already: '&cError, you are already registered.'
+  registration-sintax-error: '&cIncorrect syntax: &7/webauth <password>'
+  registration-no-perm: '&cYou do not have the permission to do this!'

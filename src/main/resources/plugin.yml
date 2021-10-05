@@ -1,0 +1,11 @@
+name: FlarumRegister
+version: '${project.version}'
+main: me.leonardo.flarumregister.FlarumRegister
+api-version: 1.17
+prefix: FlarumRegister
+authors: [ Leonardo0801 ]
+commands:
+  webauth:
+    usage: /webauth <password>
+    permission: [flarumregister.command.register,flarumregister.command.webauth]
+    description: Sign Up to Flarum Forum.
