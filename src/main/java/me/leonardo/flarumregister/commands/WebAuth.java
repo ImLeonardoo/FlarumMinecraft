@@ -42,7 +42,7 @@ public class WebAuth implements CommandExecutor {
                                                         .ofPattern("yyyy-MM-dd HH:mm:ss"));
 
                                         String hash = BCrypt.hashpw(args[0], BCrypt.gensalt());
-                                        sql.executeUpdate("INSERT INTO " + prefix + "users" + " (nickname,username,is_email_confirmed,joined_at,password,email) VALUES " + "('" + p.getName() + "','" + p.getName() + "'," + 1 + ",'" + dateFormatted + "','" + hash + "','-');");
+                                        sql.executeUpdate("INSERT INTO " + prefix + "users" + " (nickname,username,is_email_confirmed,joined_at,password,email) VALUES " + "('" + p.getName() + "','" + p.getName() + "'," + 1 + ",'" + dateFormatted + "','" + hash + "','"+p.getName()+"@minecraft');");
                                         p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.registration-success")));
                                         condition = false;
                                     }
