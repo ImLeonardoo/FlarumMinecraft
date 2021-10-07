@@ -7,5 +7,4 @@ authors: [ Leonardo0801 ]
 commands:
   webauth:
     usage: /webauth <password>
-    permission: [flarumregister.command.register,flarumregister.command.webauth]
     description: Sign Up to Flarum Forum.
