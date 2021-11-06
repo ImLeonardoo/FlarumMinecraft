@@ -30,11 +30,11 @@ public class WebAuth implements CommandExecutor {
                         String prefix = this.plugin.getConfig().getString("flarum.table-prefix");
                         try {
                             MySQLAccess sql = new MySQLAccess(this.plugin);
-                            sql.executeQuery("SELECT * FROM " + prefix + "users WHERE username='"+p.getName()+"';");
+                            sql.executeQuery("SELECT * FROM " + prefix + "users;");
                             p.sendMessage("debug 2");
                             while (sql.getResult().next()) {
                                 p.sendMessage("debug 3");
-                                if (sql.getResult().getString("username") != null) {
+                                if (sql.getResult().getString("username") == p.getName()) {
                                     p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("messages.registration-error-already")));
                                     p.sendMessage("debug 4");
                                 } else {
