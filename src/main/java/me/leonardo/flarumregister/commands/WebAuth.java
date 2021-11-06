@@ -26,28 +26,28 @@ public class WebAuth implements CommandExecutor {
             if (command.getName().equalsIgnoreCase("webauth")) {
                 if (args.length >= 1) {
                     if (p.hasPermission("flarumregister.command.register") || p.hasPermission("flarumregister.command.webauth")) {
+                        p.sendMessage("debug 1");
                         String prefix = this.plugin.getConfig().getString("flarum.table-prefix");
                         try {
                             MySQLAccess sql = new MySQLAccess(this.plugin);
-                            sql.executeQuery("SELECT * FROM " + prefix + "users");
-                            boolean condition = true;
+                            sql.executeQuery("SELECT * FROM " + prefix + "users WHERE username='"+p.getName()+"';");
+                            p.sendMessage("debug 2");
                             while (sql.getResult().next()) {
-                                while (condition) {
-                                    if (sql.getResult().getString("username").equalsIgnoreCase(p.getName())) {
-                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("messages.registration-error-already")));
-                                        condition = false;
-                                    } else {
-                                        String dateFormatted = LocalDateTime.now()
-                                                .format(DateTimeFormatter
-                                                        .ofPattern("yyyy-MM-dd HH:mm:ss"));
+                                p.sendMessage("debug 3");
+                                if (sql.getResult().getString("username") != null) {
+                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("messages.registration-error-already")));
+                                    p.sendMessage("debug 4");
+                                } else {
+                                    String dateFormatted = LocalDateTime.now()
+                                            .format(DateTimeFormatter
+                                                    .ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-                                        String hash = BCrypt.hashpw(args[0], BCrypt.gensalt());
-                                        sql.executeUpdate("INSERT INTO " + prefix + "users" + " (nickname,username,is_email_confirmed,joined_at,password,email) VALUES " + "('" + p.getName() + "','" + p.getName() + "'," + 1 + ",'" + dateFormatted + "','" + hash + "','"+p.getName()+"@minecraft');");
-                                        p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.registration-success")));
-                                        condition = false;
-                                    }
+                                    String hash = BCrypt.hashpw(args[0], BCrypt.gensalt());
+                                    sql.executeUpdate("INSERT INTO " + prefix + "users" + " (username,is_email_confirmed,joined_at,password,email) VALUES " + "('" + p.getName() + "'," + 1 + ",'" + dateFormatted + "','" + hash + "','" + p.getName() + "@minecraft');");
+                                    p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.registration-success")));
                                 }
                             }
+
                             sql.getConnection().close();
                         } catch (SQLException e) {
                             e.printStackTrace();
